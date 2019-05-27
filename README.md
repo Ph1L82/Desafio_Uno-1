@@ -1,125 +1,46 @@
-# Desafío 1: Periodos perdidos
+#MI_SOLUCION
+##Niveles realizados:  1, 2 y 3
+###### mi_solucion1, mi_solucion2 y mi_solucion3
 
-El desafío consiste en lo siguiente:
+Los 3 proyectos se realizaron en IntelliJ Idea, con Maven.
+Por lo que para compilar solo es necesario contar con Java y Maven instalados en la maquina.
+Con las variables de entorno %JAVA_HOME% y %MAVEN_HOME% configuradas con la ruta donde cada aplicacion esta instalada y agregar estas a %PATH% en M$Windows.
+En linux, dependiendo de la distribucion, pueden configurar las variables en .bashrc de su home o en el arvhivo profile, donde necesitaran tambien agregarlas a $PATH
 
--	Existe un servicio REST que llamaremos Generador De Datos o GDD.
-	-	El servicio responde con una lista de fechas generadas aleatoriamente. Estas fechas se encuentran en un lapso definidos por dos valores: fechaCreacion y fechaFin.
-	-	Cada fecha generada corresponde al primer día de un mes.
-	-	La respuesta contienen un máximo de 100 fechas. 
-	-	El servicio no entrega todas las fechas dentro del periodo, omite algunas de forma también aleatoria.
--	El objetivo de este ejercicio es que determines cuáles son los periodos que faltan.
-
-Este es un ejemplo de la respuesta que entrega este servicio:
-
-```json
-{
-    "id": 6,
-    "fechaCreacion": "1968-08-01",
-    "fechaFin": "1971-06-01",
-    "fechas": [
-      "1969-03-01",
-      "1969-05-01",
-      "1969-09-01",
-      "1971-05-01"]
-}
+Para compilar los proyectos, se debe ingresar a la carpeta del proyecto y ejecutar:
 ```
+mvn package
+```
+Este se compilara, generando el archivo .jar correspondiente en la subcarpeta "target", dentro de la carpeta principal del proyecto.
+Luego para ejecutarlo basta con escribir en consola : java -jar <nombre del ejecutable de la aplicacion> <parametro 1> <parametro 2> (los ultimos solo aplican a la solucion 1 que es una aplicacion de consola y recibe 2 parametros, para las demas obviar.)
 
-Acá se puede apreciar que el servicio generó fechas entre el 1 de agosto de 1968 y el 1 de junio de 1971. Sólo se generaron 4 fechas en este caso. 
-De acuerdo a esto, faltarían 5 fechas de 1968, 9 fechas de 1969 y 5 fechas de 1971.
-Una versión del GDD se encuentra en este repositorio en GitHub:
-https://github.com/previred/Generador_Datos_Desafio_Uno
-
-El desafío puede ser resuelto de tres maneras distintas. 
-Tú eliges cuál es la que más te acomoda entre estos tres niveles:
-
-## Nivel 1: 
-	Crear un programa que recibe, a través de la entrada estándar, un archivo en formato Json con la estructura de la respuesta de servicio (como el ejemplo de arriba) y que entrega a través de la salida estándar, como respuesta, un archivo Json con las fechas faltantes.
 Ejemplo:
-	Se entrega un archivo con este contenido:
-	
-```json
-{
-    "id": 6,
-    "fechaCreacion": "1969-03-01",
-    "fechaFin": "1970-01-01",
-    "fechas": [
-      "1969-03-01",
-      "1969-05-01",
-      "1969-09-01",
-      "1970-01-01"]
-}
+```
+java -jar mi_solucion1-0.0.1-SNAPSHOT.jar entrada.json salida.json
 ```
 
-El programa debe responder con archivo con este contenido:
-	
-```json
-{
-    "id": 6,
-    "fechaCreacion": "1968-08-01",
-    "fechaFin": "1971-06-01",
-    "fechasFaltantes": [
-      "1969-04-01",
-      "1969-06-01",
-      "1969-07-01",
-      "1969-08-01",
-      "1969-10-01",
-      "1969-11-01",
-      "1969-12-01"]
-}
-```
- 
-El programa se debe ejecutar de la siguiente manera:
-	$ mi_solucion < nombre_archivo_entrada > nombre_archivo_salida
+Lo anterior ejecutara la aplicacion de consola mi_solucion1 recibiendo como entrada el json en el archivo entrada.json y luego de analizarlo escribira el resultado en salida.json
 
-## Nivel 2:
+###### Cada proyecto incluye su propio README.md
+###### Pero aqui hay un resumen:
 
-Construir un programa que invoque al servicio REST GDD y escriba como salida un archivo con las fechas, los periodos recibidos y la lista de periodos faltantes.
-Ejemplo:
+#Resumen README's:
 
-```
-INVOCACION:
-	$ mi-solucion
-SALIDA (un archivo con el siguiente contenido) :
-	  fecha creación: 2018-10-01
-         fecha fin: 2019-04-01
-         fechas recibidas: 2018-10-01, 2018-12-01, 2019-01-01, 2019-04-01
-	    fechas faltantes: 2018-11-01, 2019-02-01, 2019-03-01
-```
+##__mi_solucion1__ (primer proyecto, corresponde al desafio nivel1)
 
-## Nivel 3:
+Consiste en una aplicacion de consola que lee un archivo json con la informacion del periodo, la analiza y escribe el resultado en otro archivo.
+La aplicacion recibe 2 parametros que en orden de entrada son, el archivo a leer (archivo que contiene el json del periodo a analizar) y el archivo de salida, en el que escribira el json correspondiente al resultado del analisis del periodo entregado.
 
-Implementar un nuevo servicio REST. Este servicio REST debe invocar al servicio GDD y entregar la respuesta en formato JSON con las fechas recibidas y las fechas faltantes.
-Ejemplo de la respuesta que debería entregar:
+##__mi_solucion2__ (segundo proyecto, corresponde al desafio nivel2)
 
-```json
-{
-    "id": 6,
-    "fechaCreacion": "1969-03-01",
-    "fechaFin": "1970-01-01",
-    "fechas": [
-      "1969-03-01",
-      "1969-05-01",
-      "1969-09-01",
-      "1970-01-01"],
-    "fechasFaltantes": [
-      "1969-04-01",
-      "1969-06-01",
-      "1969-07-01",
-      "1969-08-01",
-      "1969-10-01",
-      "1969-11-01",
-      "1969-12-01"]
+Consiste en una aplicacion de consola que al ejecutarse consume un servicio rest ([Generador Datos Desafio](https://github.com/previred/Generador_Datos_Desafio_Uno)). Esta aplicacion debe estar operando en el puerto 8080
+La aplicacion mi_solucion2 esta configurada para trabajar en el **puerto 9090** con tal de no topar. Para cambiar la configuracion del puerto solo es necesario modificar el archivo :
+**mi_solucion2/src/main/resources/application.properties**
+cambiando el numero de puerto por uno disponible.
 
-}
-```
+##__mi_solucion3__ (tercer proyecto, corresponde al desafio nivel3)
+Consiste en una API REST desarrollada con Spring Boot y Swagger2.
+La aplicacion, configurada para operar en el **puerto 9999**, lee el servicio rest __Generador Datos Desafio__, operando en el puerto 8080. Desde la cual obtiene el json del Periodo, lo analiza y devuelve el resultado en la raiz, para hacelo mas conveniente y facil de encontrar (http://localhost:9999/)
+Para una mejor visualizacion del resultado se recomienda utilizar [PostMan](https://www.getpostman.com/)
+Ingresando la URL antes indicada y en Header pasando el parametro 'Accept' con el valor 'application/json'
 
-REQUISITOS:
--	Se pueden implementar las soluciones en cualquier lenguaje y framework. Aunque recomendamos usar: Java(con o sin Spring Boot), Go y Python.
--	La solución debe ser enviada vía un pull request a este repositorio.
--	La solución debe contener un README.md con las instrucciones para compilar e instalar.
--	Puedes implementar cualquiera de los 3 niveles, no es necesario implementar los 3.
--	Hay bonus si usas SWAGGER.
--	Junto con la solución debes entregar un archivo con la entrada y con la salida en formato JSON.
-
-NOTA:
-Todos los poll reuqests serán rechazados, esto no quiere decir que ha sido rechazada la solución, sino que es una forma de que otros postulantes no copien tu código.

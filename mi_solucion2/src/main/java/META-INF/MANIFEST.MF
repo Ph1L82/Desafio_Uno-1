@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Main-Class: cl.philipsoft.mi_solucion2.MiSolucion2Application
+
